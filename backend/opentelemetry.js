@@ -6,7 +6,7 @@ const { getNodeAutoInstrumentations } = require('@opentelemetry/auto-instrumenta
 const { OTLPTraceExporter } = require('@opentelemetry/exporter-trace-otlp-http');
 
 const exporterOptions = {
-  url: process.env.OTEL_EXPORTER_OTLP_ENDPOINT || 'http://localhost:4318/v1/traces'
+  url: process.env.OTEL_EXPORTER_OTLP_ENDPOINT || 'http://localhost:4318/v1/traces',
 };
 
 const traceExporter = new OTLPTraceExporter(exporterOptions);
@@ -29,18 +29,29 @@ const sdk = new opentelemetry.NodeSDK({
   serviceName: process.env.OTEL_SERVICE_NAME || 'crud-app',
 });
 
-// initialize the SDK and register with the OpenTelemetry API
-// this enables the API to record telemetry
-sdk.start()
-  .then(() => console.log('OpenTelemetry initialized'))
-  .catch((error) => console.log('Error initializing OpenTelemetry', error));
+// Async function to initialize OpenTelemetry
+async function initializeTelemetry() {
+  try {
+    await sdk.start();  // Wait for the SDK to initialize
+    console.log('OpenTelemetry initialized');
+  } catch (error) {
+    console.log('Error initializing OpenTelemetry', error);
+  }
+}
 
-// gracefully shut down the SDK on process exit
-process.on('SIGTERM', () => {
-  sdk.shutdown()
-    .then(() => console.log('OpenTelemetry terminated'))
-    .catch((error) => console.log('Error terminating OpenTelemetry', error))
-    .finally(() => process.exit(0));
+// Initialize telemetry
+initializeTelemetry();
+
+// Gracefully shut down the SDK on process exit
+process.on('SIGTERM', async () => {
+  try {
+    await sdk.shutdown();  // Wait for the SDK to shut down
+    console.log('OpenTelemetry terminated');
+  } catch (error) {
+    console.log('Error terminating OpenTelemetry', error);
+  } finally {
+    process.exit(0);
+  }
 });
 
 module.exports = sdk;
