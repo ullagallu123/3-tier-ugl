@@ -27,7 +27,6 @@
     "supertest": "^6.3.3",
     "eslint": "^8.44.0",
     "redis-mock": "^0.56.3",
-    "mock-mysql2": "^1.0.1",
     "nodemon": "^3.0.1"
   },
   "jest": {
