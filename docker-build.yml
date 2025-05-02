@@ -1,0 +1,17 @@
+services:
+  mysql:
+    build:
+      context: ./mysql
+      dockerfile: Dockerfile
+    image: mysql:v1
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: backend:v1
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: react:v1
+ 
