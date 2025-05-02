@@ -6,7 +6,7 @@ RUN chown crud:crud -R /opt/server
 WORKDIR /opt/server
 COPY package.json ./
 COPY *.js ./
-RUN npm install --omit=dev
+RUN npm install
 USER crud
 EXPOSE 8080
 CMD ["node", "server.js"]
