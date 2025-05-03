@@ -16,21 +16,21 @@ services:
       - spa
     restart: always
 
-  backend:
-    image: backend:v1
-    container_name: backend
-    environment:
-      DB_HOST: mysql
-      DB_USER: crud
-      DB_PASSWORD: CrudApp@1
-      DB_NAME: crud_app
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
-    ports:
-      - 8080:8080
-    networks:
-      - spa
-    restart: always
+  # backend:
+  #   image: backend:v1
+  #   container_name: backend
+  #   environment:
+  #     DB_HOST: mysql
+  #     DB_USER: crud
+  #     DB_PASSWORD: CrudApp@1
+  #     DB_NAME: crud_app
+  #     REDIS_HOST: redis
+  #     REDIS_PORT: 6379
+  #   ports:
+  #     - 8080:8080
+  #   networks:
+  #     - spa
+  #   restart: always
 
   # react:
   #   image: react:v1
