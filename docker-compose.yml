@@ -32,16 +32,16 @@ services:
       - spa
     restart: always
 
-  # react:
-  #   image: react:v1
-  #   container_name: react
-  #   volumes:
-  #     - ./nginx.conf:/etc/nginx/nginx.conf:ro
-  #   ports:
-  #     - "80:80"
-  #   networks:
-  #     - spa
-  #   restart: always
+  react:
+    image: frontend:v1
+    container_name: react
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "80:80"
+    networks:
+      - spa
+    restart: always
 
 networks:
   spa:
