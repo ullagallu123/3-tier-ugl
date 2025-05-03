@@ -31,7 +31,7 @@ services:
     restart: always
 
   react:
-    image: frontend:v1
+    image: react:v1
     container_name: react
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
