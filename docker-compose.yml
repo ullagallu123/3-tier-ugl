@@ -26,8 +26,6 @@ services:
       DB_NAME: crud_app
       REDIS_HOST: redis
       REDIS_PORT: 6379
-    ports:
-      - "8080:8080"
     networks:
       - spa
     restart: always
