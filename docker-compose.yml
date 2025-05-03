@@ -64,6 +64,13 @@ services:
       - prometheus
     networks:
       - spa
+  docker-exporter:
+    image: prom/docker-exporter
+    container_name: docker-exporter
+    networks:
+      - spa
+    ports:
+      - "9323:9323" 
 
   cadvisor:
     image: google/cadvisor:latest
