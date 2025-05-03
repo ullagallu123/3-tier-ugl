@@ -43,6 +43,73 @@ services:
       - spa
     restart: always
 
+  prometheus:
+    image: prom/prometheus:v2.35.0
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    restart: always
+    networks:
+      - spa
+  
+  grafana:
+    image: grafana/grafana:8.5.0
+    container_name: grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    ports:
+      - "3000:3000"
+    restart: always
+    depends_on:
+      - prometheus
+    networks:
+      - spa
+
+  cadvisor:
+    image: google/cadvisor:latest
+    container_name: cadvisor
+    ports:
+      - "8080:8080"
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - spa
+
+  prometheus-docker-exporter:
+    image: wrouesnel/postgres_exporter:latest
+    container_name: prometheus-docker-exporter
+    environment:
+      - DATA_SOURCE_NAME=postgresql://admin:admin@localhost:5432
+    ports:
+      - "9104:9104"
+    restart: always
+    networks:
+      - spa
+  redis-exporter:
+    image: oliver006/redis_exporter:latest
+    container_name: redis-exporter
+    environment:
+      - REDIS_ADDR=redis:6379
+    ports:
+      - "9121:9121"
+    restart: always
+    networks:
+      - spa
+
+  mysql-exporter:
+    image: prom/mysqld-exporter:latest
+    container_name: mysql-exporter
+    environment:
+      - DATA_SOURCE_NAME=root:CrudApp@1@(mysql:3306)/information_schema
+    ports:
+      - "9104:9104"
+    restart: always
+    networks:
+      - spa
+
 networks:
   spa:
     driver: bridge
