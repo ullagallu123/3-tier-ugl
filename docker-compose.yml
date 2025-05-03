@@ -82,7 +82,7 @@ services:
     environment:
       - DATA_SOURCE_NAME=postgresql://admin:admin@localhost:5432
     ports:
-      - "9104:9104"
+      - "9105:9104"
     restart: always
     networks:
       - spa
